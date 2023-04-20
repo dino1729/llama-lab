@@ -1,17 +1,27 @@
 import os
+import openai
 from llama_index import (
     GPTSimpleVectorIndex,
     GPTListIndex,
     ServiceContext,
     LLMPredictor,
 )
+import logging
+logger = logging.getLogger()
+logger.level = logging.WARN
+# Get API key from environment variable
+os.environ["OPENAI_API_KEY"] = os.environ.get("AZUREOPENAIAPIKEY")
+os.environ["OPENAI_API_BASE"] = os.environ.get("AZUREOPENAIENDPOINT")
+openai.api_type = "azure"
+openai.api_version = "2023-03-15-preview"
+openai.api_base = os.environ.get("AZUREOPENAIENDPOINT")
+openai.api_key = os.environ.get("AZUREOPENAIAPIKEY")
 
 from langchain.llms import AzureOpenAI
 from langchain.chat_models import AzureChatOpenAI
 #llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", max_tokens=512)
 llm = AzureChatOpenAI(temperature=0, deployment_name="gpt-3p5-turbo", max_tokens=512)
 llm_predictor = LLMPredictor(llm=llm)
-
 
 def initialize_task_list_index(
     documents, llm_predictor=llm_predictor, index_path="./task_index.json", chunk_size_limit=2000

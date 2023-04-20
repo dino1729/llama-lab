@@ -6,7 +6,15 @@ from auto_llama.actions import run_command
 from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 
 import logging
-
+import os
+import openai
+# Get API key from environment variable
+os.environ["OPENAI_API_KEY"] = os.environ.get("AZUREOPENAIAPIKEY")
+os.environ["OPENAI_API_BASE"] = os.environ.get("AZUREOPENAIENDPOINT")
+openai.api_type = "azure"
+openai.api_version = "2023-03-15-preview"
+openai.api_base = os.environ.get("AZUREOPENAIENDPOINT")
+openai.api_key = os.environ.get("AZUREOPENAIAPIKEY")
 
 def main():
     logger = logging.getLogger()
