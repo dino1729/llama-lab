@@ -1,0 +1,6 @@
+/data
+/auto_llama/data
+/auto_llama/__pycache__
+
+/llama_agi/agi/__pycache__
+/llama_agi/agi/tools/__pycache__

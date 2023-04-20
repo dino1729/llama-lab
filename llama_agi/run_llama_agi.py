@@ -8,12 +8,16 @@ from agi.ExecutionAgent import SimpleExecutionAgent, ToolExecutionAgent
 from agi.TaskManager import TaskManager
 from agi.utils import log_current_status
 
+from langchain.llms import AzureOpenAI
+from langchain.chat_models import AzureChatOpenAI
 
 def run_llama_agi(objective: str, initial_task: str, sleep_time: int) -> None:
     task_manager = TaskManager([initial_task])
-    simple_execution_agent = SimpleExecutionAgent()
-    tool_execution_agent = ToolExecutionAgent()
-
+    #simple_execution_agent = SimpleExecutionAgent()
+    #tool_execution_agent = ToolExecutionAgent()
+    llm = AzureChatOpenAI(temperature=0, deployment_name="gpt-3p5-turbo", max_tokens=512)
+    simple_execution_agent = SimpleExecutionAgent(llm=llm)
+    tool_execution_agent = ToolExecutionAgent(llm=llm)
     # get initial list of tasks
     initial_completed_tasks_summary = task_manager.get_completed_tasks_summary()
     initial_task_prompt = initial_task + "\nReturn the list as an array."

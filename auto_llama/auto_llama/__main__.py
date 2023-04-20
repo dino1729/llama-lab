@@ -3,7 +3,7 @@ from auto_llama.agent import Agent
 import auto_llama.const as const
 from auto_llama.utils import print_pretty
 from auto_llama.actions import run_command
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 
 import logging
 
@@ -15,8 +15,9 @@ def main():
     # import os
     # os.environ["OPENAI_API_KEY"] = 'YOUR OPENAI API KEY'
 
-    openaichat = ChatOpenAI(
-        model_name="gpt-4",
+    openaichat = AzureChatOpenAI(
+        #model_name="gpt-4",
+        deployment_name="gpt-3p5-turbo",
         temperature=0.0,
         max_tokens=400,
     )

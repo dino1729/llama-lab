@@ -1,8 +1,8 @@
 from langchain.agents import AgentExecutor, ZeroShotAgent, load_tools
 from langchain.chains import LLMChain
-from langchain.llms import OpenAI, BaseLLM
+from langchain.llms import OpenAI, BaseLLM, AzureOpenAI
 from langchain.chat_models.base import BaseChatModel
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.prompts import PromptTemplate
 from typing import Optional, Union
 
@@ -20,9 +20,11 @@ class BaseExecutionAgent:
         if llm:
             self._llm = llm
         elif model_name == "text-davinci-003":
-            self._llm = OpenAI(temperature=0, model_name=model_name, max_tokens=512)
+            #self._llm = OpenAI(temperature=0, model_name=model_name, max_tokens=512)
+            self._llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", max_tokens=512)
         else:
-            self._llm = ChatOpenAI(temperature=0, model_name=model_name, max_tokens=512)
+            #self._llm = ChatOpenAI(temperature=0, model_name=model_name, max_tokens=512)
+            self._llm = AzureChatOpenAI(temperature=0, deployment_name="gpt-3p5-turbo", max_tokens=512)
 
     def execute_task(
         self, objective: str, task: str, completed_tasks_summary: str

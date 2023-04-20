@@ -13,6 +13,11 @@ from agi.task_prompts import (
     NO_COMPLETED_TASKS_SUMMARY,
 )
 
+from langchain.llms import AzureOpenAI
+from langchain.chat_models import AzureChatOpenAI
+
+#llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", max_tokens=512)
+llm = AzureChatOpenAI(temperature=0, deployment_name="gpt-3p5-turbo", max_tokens=512)
 
 class TaskManager:
     def __init__(self, tasks: List[str]) -> None:
